@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Trie Test</title>
+
+<style>
+input {
+  font-size: inherit;
+}
+</style>
+
+<h1>Trie Test</h1>
+
+<input type="text" id="putKeyText" placeholder="key"/>
+<input type="text" id="putValueText" placeholder="value"/>
+<input type="button" id="putButton" value="Put"/>
+
+<br/><br/>
+
+<input type="text" id="getText" placeholder="key"/>
+<input type="button" id="getButton" value="Get"/>
+
+<pre id="results"></pre>
+
+<script src="trie.js"></script>
+
+<script>
+const log = function() {
+  results.innerText = Array.from(arguments).join(" ")
+  console.log(...arguments)
+}
+
+const getButtonOnClick = function(event) {
+  const node = trie.get(getText.value.trim())
+  log(node)
+}
+getButton.addEventListener("click", getButtonOnClick)
+
+const putButtonOnClick = function(event) {
+  trie.put(putKeyText.value.trim(), putValueText.value.trim())
+}
+putButton.addEventListener("click", putButtonOnClick)
+
+const tests = [
+  [ "cow", "moo" ],
+  [ "creep", "beep" ],
+  [ "crumb", "numb" ],
+  [ "whee", "hee" ],
+  [ "woop", "boop" ],
+  [ "wow", "how" ],
+]
+
+const trie = new Trie()
+for (let t of tests) {
+  trie.put(t[0], t[1])
+}
+
+let passed = true
+for (let t of tests) {
+  const n = trie.get(t[0])
+  if (!n) {
+    log("No node for", t[0])
+    passed = false
+    break
+  }
+  if (n.value !== t[1]) {
+    log("Got", n.value, "expected", t[1])
+    passed = false
+    break
+  }
+}
+if (passed) {
+  log("Tests passed")
+} else {
+  log("Tests failed")
+}
+</script>
