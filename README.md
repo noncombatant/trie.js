@@ -1,7 +1,7 @@
 # A Simple JavaScript Trie
 
 This is a simple implementation of a trie in JavaScript. It can map any iterable
-type (string, arrays, et c.) to any type.
+type (string, array, et c.) to any type.
 
 It would be helpful if something like this were in the JavaScript standard
 library. It’s surprisingly applicable in e.g. autocomplete UIs. Until then, you
