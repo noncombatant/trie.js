@@ -47,6 +47,7 @@ const getButtonOnClick = function(event) {
   log(node)
 }
 getButton.addEventListener("click", getButtonOnClick)
+getText.addEventListener("input", getButtonOnClick)
 
 const removeButtonOnClick = function(event) {
   trie.remove(removeText.value.trim())
