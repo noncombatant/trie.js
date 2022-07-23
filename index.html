@@ -38,12 +38,14 @@ const getButtonOnClick = function(event) {
 getButton.addEventListener("click", getButtonOnClick)
 
 const putButtonOnClick = function(event) {
-  trie.put(putKeyText.value.trim(), putValueText.value.trim())
+  const node = trie.put(putKeyText.value.trim(), putValueText.value.trim())
+  log(node)
 }
 putButton.addEventListener("click", putButtonOnClick)
 
 const tests = [
   [ "cow", "moo" ],
+  [ "cows", "moos" ],
   [ "creep", "beep" ],
   [ "crumb", "numb" ],
   [ "whee", "hee" ],
@@ -70,9 +72,27 @@ for (let t of tests) {
     break
   }
 }
-if (passed) {
-  log("Tests passed")
-} else {
-  log("Tests failed")
+
+const prefixExpectations = {
+  "c": new Set(["moo", "moos", "beep", "numb"]),
+  "w": new Set(["hee", "boop", "how"]),
 }
+for (let e in prefixExpectations) {
+  const n = trie.get(e).values()
+  const s = prefixExpectations[e]
+  if (s.length !== n.length) {
+    log("Got", n, "expected", s)
+    passed = false
+    break
+  }
+  for (let i of s) {
+    if (!n.has(i)) {
+      log("Got", n, "expected", s)
+      passed = false
+      break
+    }
+  }
+}
+
+log(passed ? "Tests passed" : "Tests failed")
 </script>
