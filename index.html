@@ -21,6 +21,11 @@ input {
 <input type="text" id="getText" placeholder="key"/>
 <input type="button" id="getButton" value="Get"/>
 
+<br/><br/>
+
+<input type="text" id="removeText" placeholder="key"/>
+<input type="button" id="removeButton" value="Remove"/>
+
 <pre id="results"></pre>
 
 <script src="trie.js"></script>
@@ -31,17 +36,23 @@ const log = function() {
   console.log(...arguments)
 }
 
+const putButtonOnClick = function(event) {
+  const node = trie.put(putKeyText.value.trim(), putValueText.value.trim())
+  log(node)
+}
+putButton.addEventListener("click", putButtonOnClick)
+
 const getButtonOnClick = function(event) {
   const node = trie.get(getText.value.trim())
   log(node)
 }
 getButton.addEventListener("click", getButtonOnClick)
 
-const putButtonOnClick = function(event) {
-  const node = trie.put(putKeyText.value.trim(), putValueText.value.trim())
-  log(node)
+const removeButtonOnClick = function(event) {
+  trie.remove(removeText.value.trim())
+  log("removed")
 }
-putButton.addEventListener("click", putButtonOnClick)
+removeButton.addEventListener("click", removeButtonOnClick)
 
 const setsEqual = function(set1, set2) {
   if (set1.length !== set2.length) {
