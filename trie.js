@@ -3,7 +3,8 @@
 
 "use strict";
 
-// A simple [trie](https://en.wikipedia.org/wiki/Trie).
+// A simple [trie](https://en.wikipedia.org/wiki/Trie). This trie can map any
+// iterable to any type.
 class Trie {
   // Creates a new node.
   constructor(value, children) {
@@ -14,7 +15,7 @@ class Trie {
   // Creates node(s) for `key` in the trie, and gives it the `value`. Returns
   // the node for `key`.
   //
-  // `key` must be iterable (e.g. a string of text).
+  // `key` must be iterable (string, array, et c.). `value` can be any object.
   put(key, value) {
     let t = this
     for (let k of key) {
