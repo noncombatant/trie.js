@@ -55,7 +55,7 @@ const setsEqual = function(set1, set2) {
   return true
 }
 
-const tests = [
+const testPairs = [
   [ "cow", "moo" ],
   [ "cows", "moos" ],
   [ "creep", "beep" ],
@@ -65,51 +65,70 @@ const tests = [
   [ "wow", "how" ],
 ]
 
-const trie = new Trie()
-for (let t of tests) {
-  trie.put(t[0], t[1])
-}
-
-let passed = true
-for (let t of tests) {
-  const n = trie.get(t[0])
-  if (!n) {
-    log("No node for", t[0])
-    passed = false
-    break
+const buildTestTrie = function(pairs) {
+  const trie = new Trie()
+  for (let t of pairs) {
+    trie.put(t[0], t[1])
   }
-  if (n.value !== t[1]) {
-    log("Got", n.value, "expected", t[1])
-    passed = false
-    break
+  return trie
+}
+
+const testBasic = function(pairs) {
+  const trie = buildTestTrie(pairs)
+  for (let t of pairs) {
+    const n = trie.get(t[0])
+    if (!n) {
+      log("No node for", t[0])
+      return false
+    }
+    if (n.value !== t[1]) {
+      log("Got", n.value, "expected", t[1])
+      return false
+    }
+  }
+  return true
+}
+
+const testPrefixSearch = function(pairs) {
+  const trie = buildTestTrie(pairs)
+  const expectations = {
+    "c": new Set(["moo", "moos", "beep", "numb"]),
+    "w": new Set(["hee", "boop", "how"]),
+  }
+  for (let e in expectations) {
+    const n = trie.get(e).values()
+    const s = expectations[e]
+    if (!setsEqual(n, s)) {
+      log("Got", n, "expected", s)
+      return false
+    }
+  }
+  return true
+}
+
+const testRemove = function(pairs) {
+  const trie = buildTestTrie(pairs)
+  trie.remove("cows")
+  let n = trie.get("cows")
+  if (n !== undefined) {
+    log("Could not remove 'cows'", n)
+    return false
+  }
+  trie.remove("c")
+  const expected = new Set(["hee", "boop", "how"])
+  n = trie.values()
+  if (!setsEqual(expected, n)) {
+    log("Got", n, "expected", expected)
+    return false
+  }
+  return true
+}
+
+for (let t of [testBasic, testPrefixSearch, testRemove]) {
+  if (!t(testPairs)) {
+    log("tests failed")
   }
 }
-
-const prefixExpectations = {
-  "c": new Set(["moo", "moos", "beep", "numb"]),
-  "w": new Set(["hee", "boop", "how"]),
-}
-for (let e in prefixExpectations) {
-  const n = trie.get(e).values()
-  const s = prefixExpectations[e]
-  if (!setsEqual(n, s)) {
-    log("Got", n, "expected", s)
-  }
-}
-
-trie.remove("cows")
-let n = trie.get("cows")
-if (n !== undefined) {
-  log("Could not remove 'cows'", n)
-  passed = false
-}
-trie.remove("c")
-const expected = new Set(["hee", "boop", "how"])
-n = trie.values()
-if (!setsEqual(expected, n)) {
-  log("Got", n, "expected", expected)
-  passed = false
-}
-
-log(passed ? "Tests passed" : "Tests failed")
+log("tests passed")
+const trie = buildTestTrie(testPairs)
 </script>
