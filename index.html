@@ -43,6 +43,18 @@ const putButtonOnClick = function(event) {
 }
 putButton.addEventListener("click", putButtonOnClick)
 
+const setsEqual = function(set1, set2) {
+  if (set1.length !== set2.length) {
+    return false
+  }
+  for (let e of set1) {
+    if (!set2.has(e)) {
+      return false
+    }
+  }
+  return true
+}
+
 const tests = [
   [ "cow", "moo" ],
   [ "cows", "moos" ],
@@ -80,18 +92,23 @@ const prefixExpectations = {
 for (let e in prefixExpectations) {
   const n = trie.get(e).values()
   const s = prefixExpectations[e]
-  if (s.length !== n.length) {
+  if (!setsEqual(n, s)) {
     log("Got", n, "expected", s)
-    passed = false
-    break
   }
-  for (let i of s) {
-    if (!n.has(i)) {
-      log("Got", n, "expected", s)
-      passed = false
-      break
-    }
-  }
+}
+
+trie.remove("cows")
+let n = trie.get("cows")
+if (n !== undefined) {
+  log("Could not remove 'cows'", n)
+  passed = false
+}
+trie.remove("c")
+const expected = new Set(["hee", "boop", "how"])
+n = trie.values()
+if (!setsEqual(expected, n)) {
+  log("Got", n, "expected", expected)
+  passed = false
 }
 
 log(passed ? "Tests passed" : "Tests failed")

@@ -43,6 +43,21 @@ class Trie {
     return t
   }
 
+  // Remove the node for `key` (if present).
+  remove(key) {
+    let t = this
+    for (let i = 0; i < key.length - 1; i++) {
+      const k = key[i]
+      if (!t.children || !t.children[k]) {
+        return
+      }
+      t = t.children[k]
+    }
+    if (t.children) {
+      delete t.children[key[key.length - 1]]
+    }
+  }
+
   // Returns a `Set` containing the value of `this` (if defined) and the values
   // of all the nodes underneath it (if any).
   values() {
