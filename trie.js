@@ -78,6 +78,6 @@ class Trie {
 
   // Returns a JSON string representing all the values returned by `values`.
   toString() {
-    return JSON.stringify(Array.from(this.values()))
+    return JSON.stringify(Array.from(this.values()), null, 2)
   }
 }
