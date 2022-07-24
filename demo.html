@@ -1,0 +1,77 @@
+<!--
+// Copyright 2022 by [Chris Palmer](https://noncombatant.org), and released
+// under the terms of the Apache license, version 2.0.
+-->
+<!DOCTYPE html>
+<html lang="en-US">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Trie Demo</title>
+
+<style>
+input {
+  font-size: inherit;
+}
+</style>
+
+<h1>Trie Demo</h1>
+
+<input type="button" id="loadButton" value="Load"/>
+
+<br/><br/>
+
+<input type="text" id="getText" placeholder="key"/>
+<input type="button" id="getButton" value="Get"/>
+
+<br/><br/>
+
+<pre id="results"></pre>
+
+<script src="util.js"></script>
+<script src="trie.js"></script>
+<script src="demo.js"></script>
+
+<script>
+const trie = new Trie()
+
+const loadButtonOnClick = function(event) {
+  loadSongData(trie)
+}
+loadButton.addEventListener("click", loadButtonOnClick)
+
+window.onload = loadButtonOnClick
+
+const getButtonOnClick = function(event) {
+  results.innerText = ""
+
+  const start = performance.now()
+  const node = trie.get(getText.value.trim().toLocaleLowerCase())
+  const end = performance.now()
+  log(Math.round(end - start), "ms", "\n")
+
+  if (!node) {
+    results.innerText = "0 results"
+    return
+  }
+
+  // Collect all the `value`s of all the nodes in the sub-trie. `Trie.values`
+  // returns a `Set`, and since we inserted `Set`s as the values of the nodes,
+  // we now have a set of sets.
+  const values = node.values()
+
+  // Iterate over the `Set`s in `values`, and...
+  let text = []
+  for (let songs of values.values()) {
+    // ...extract the song objects in each:
+    for (let song of songs) {
+      text.push(JSON.stringify(song, null, 2))
+    }
+  }
+  results.innerText += text.join("\n")
+
+  // Note that we create the final string by `join`ing an array of strings,
+  // because `+=` on strings can be slow.
+}
+getButton.addEventListener("click", getButtonOnClick)
+getText.addEventListener("input", getButtonOnClick)
+</script>

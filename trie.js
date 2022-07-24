@@ -13,8 +13,8 @@ class Trie {
     this.children = children
   }
 
-  // Creates node(s) for `key` in the trie, and gives it the `value`. Returns
-  // the node for `key`.
+  // Creates node(s) for `key` in the trie, and sets the value of the terminal
+  // node for `key` to `value`. Returns the terminal node for `key`.
   //
   // `key` must be iterable (string, array, et c.). `value` can be any object.
   put(key, value) {
@@ -31,7 +31,7 @@ class Trie {
     return t
   }
 
-  // Returns the node for `key`, if present, or `undefined`. The returned node
+  // Returns the terminal node for `key`, or `undefined`. The returned node
   // might be empty. It might have no value, and/or it might be the root of a
   // sub-trie.
   get(key) {
@@ -45,7 +45,7 @@ class Trie {
     return t
   }
 
-  // Remove the node for `key` (if present).
+  // Removes the terminal node for `key` (if present).
   remove(key) {
     let t = this
     for (let i = 0; i < key.length - 1; i++) {
@@ -61,7 +61,10 @@ class Trie {
   }
 
   // Returns a `Set` containing the value of `this` (if defined) and the values
-  // of all the nodes underneath it (if any).
+  // of all the nodes underneath `this` (if any).
+  //
+  // This method goes well with `get`, to collect all the values matching a
+  // given key prefix.
   values() {
     const s = new Set()
     if (this.value !== undefined) {
