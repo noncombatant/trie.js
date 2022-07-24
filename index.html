@@ -1,3 +1,7 @@
+<!--
+// Copyright 2022 by [Chris Palmer](https://noncombatant.org), and released
+// under the terms of the Apache license, version 2.0.
+-->
 <!DOCTYPE html>
 <html lang="en-US">
 <meta charset="UTF-8"/>
@@ -28,14 +32,10 @@ input {
 
 <pre id="results"></pre>
 
+<script src="util.js"></script>
 <script src="trie.js"></script>
 
 <script>
-const log = function() {
-  results.innerText = Array.from(arguments).join(" ")
-  console.log(...arguments)
-}
-
 const putButtonOnClick = function(event) {
   const node = trie.put(putKeyText.value.trim(), putValueText.value.trim())
   log(node)
@@ -56,18 +56,6 @@ const removeButtonOnClick = function(event) {
   log("removed")
 }
 removeButton.addEventListener("click", removeButtonOnClick)
-
-const setsEqual = function(set1, set2) {
-  if (set1.length !== set2.length) {
-    return false
-  }
-  for (let e of set1) {
-    if (!set2.has(e)) {
-      return false
-    }
-  }
-  return true
-}
 
 const testPairs = [
   [ "cow", "moo" ],
