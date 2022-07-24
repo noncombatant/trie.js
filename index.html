@@ -43,8 +43,10 @@ const putButtonOnClick = function(event) {
 putButton.addEventListener("click", putButtonOnClick)
 
 const getButtonOnClick = function(event) {
+  const start = performance.now()
   const node = trie.get(getText.value.trim())
-  log(node)
+  const end = performance.now()
+  log(Math.round(end - start), "ms", "\n", node)
 }
 getButton.addEventListener("click", getButtonOnClick)
 getText.addEventListener("input", getButtonOnClick)
