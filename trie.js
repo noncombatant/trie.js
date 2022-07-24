@@ -5,7 +5,7 @@
 
 // A simple [trie](https://en.wikipedia.org/wiki/Trie). This trie can map any
 // iterable to any type.
-class Trie {
+export class Trie {
   // Creates a new node, the root of a (sub-)trie. The node has 2 properties:
   // `value` (any object), and `children` (an array of nodes).
   constructor(value, children) {

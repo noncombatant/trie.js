@@ -27,11 +27,12 @@ input {
 
 <pre id="results"></pre>
 
-<script src="util.js"></script>
-<script src="trie.js"></script>
-<script src="demo.js"></script>
+<script type="module">
+"use strict";
+import { loadSongData } from "./demo.js"
+import { log } from "./util.js"
+import { Trie } from "./trie.js"
 
-<script>
 const trie = new Trie()
 
 const loadButtonOnClick = function(event) {

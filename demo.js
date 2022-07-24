@@ -3,6 +3,8 @@
 
 "use strict";
 
+import { log } from "./util.js"
+
 // A complex but realistic use of `Trie`: A searchable database of songs, such
 // as a music player might use.
 //
@@ -23,7 +25,7 @@ const getWords = function(string) {
 //
 // Extracting the songs and printing them out is shown in `getButtonOnClick` in
 // demo.html.
-const loadSongData = async function(trie) {
+export const loadSongData = async function(trie) {
   let start = performance.now()
   const response = await fetch("data.json")
   const songs = await response.json()

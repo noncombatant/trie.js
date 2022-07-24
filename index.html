@@ -32,10 +32,11 @@ input {
 
 <pre id="results"></pre>
 
-<script src="util.js"></script>
-<script src="trie.js"></script>
+<script type="module">
+"use strict";
+import { log, setsEqual } from "./util.js"
+import { Trie } from "./trie.js"
 
-<script>
 const putButtonOnClick = function(event) {
   const node = trie.put(putKeyText.value.trim(), putValueText.value.trim())
   log(node)
