@@ -1,5 +1,5 @@
-// Copyright 2022 by [Chris Palmer](https://noncombatant.org), and released
-// under the terms of the Apache license, version 2.0.
+// Copyright 2022 by [Chris Palmer](https://noncombatant.org)
+// SPDX-License-Identifier: Apache-2.0
 
 "use strict";
 
